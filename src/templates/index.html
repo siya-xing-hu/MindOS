@@ -186,6 +186,7 @@ let editingKb = null;
 
 async function init() {
   await loadKbs();
+  showTab('docs');
   document.getElementById('btn-manage').addEventListener('click', () => showTab('manage'));
   document.querySelectorAll('nav button').forEach(btn => {
     btn.addEventListener('click', () => showTab(btn.dataset.tab));
