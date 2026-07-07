@@ -343,12 +343,13 @@ async function loadTree() {
 function renderTree(node, parent, depth) {
   for (const [name, child] of Object.entries(node.children || {})) {
     const dirDiv = document.createElement('div');
-    dirDiv.className = 'tree-dir open';
+    dirDiv.className = 'tree-dir';
     dirDiv.style.marginLeft = (depth * 12) + 'px';
     dirDiv.textContent = name;
     parent.appendChild(dirDiv);
     const childContainer = document.createElement('div');
     childContainer.className = 'tree-node';
+    childContainer.style.display = 'none';
     parent.appendChild(childContainer);
     dirDiv.addEventListener('click', () => {
       dirDiv.classList.toggle('open');
