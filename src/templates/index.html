@@ -478,7 +478,16 @@ async function doSearch() {
   data.results.forEach(r => {
     const div = document.createElement('div');
     div.className = 'result';
+    div.style.cursor = 'pointer';
     div.innerHTML = `<div class="result-meta"><span>${r.title || ''} › ${r.section || ''}</span><span class="score">score: ${r.score.toFixed(4)}</span></div><div class="result-text">${escapeHtml(r.text).replace(new RegExp(escapeReg(q), 'gi'), m => '<mark>'+m+'</mark>')}</div>`;
+    div.addEventListener('click', () => {
+      showTab('docs');
+      setTimeout(() => {
+        expandToPath(r.path);
+        loadFile(r.path);
+        selectFileNode(r.path);
+      }, 100);
+    });
     container.appendChild(div);
   });
 }
