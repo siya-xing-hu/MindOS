@@ -340,10 +340,12 @@ async function loadTree() {
   renderTree(data.tree, panel, 0);
 }
 
-function renderTree(node, parent, depth) {
+function renderTree(node, parent, depth, path = '') {
   for (const [name, child] of Object.entries(node.children || {})) {
+    const childPath = path ? path + '/' + name : name;
     const dirDiv = document.createElement('div');
     dirDiv.className = 'tree-dir';
+    dirDiv.dataset.path = childPath;
     dirDiv.style.marginLeft = (depth * 12) + 'px';
     dirDiv.textContent = name;
     parent.appendChild(dirDiv);
@@ -355,7 +357,7 @@ function renderTree(node, parent, depth) {
       dirDiv.classList.toggle('open');
       childContainer.style.display = dirDiv.classList.contains('open') ? '' : 'none';
     });
-    renderTree(child, childContainer, depth + 1);
+    renderTree(child, childContainer, depth + 1, childPath);
   }
   for (const f of node.files || []) {
     const fileDiv = document.createElement('div');
