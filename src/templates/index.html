@@ -223,8 +223,23 @@ async function loadKbs() {
     currentKb = data.kbs[0].kb_name;
   }
   sel.value = currentKb;
-  sel.onchange = () => { currentKb = sel.value; loadTree(); };
+  sel.onchange = () => {
+    currentKb = sel.value;
+    clearStaleState();
+    loadTree();
+  };
   document.getElementById('kb-status').textContent = '';
+}
+
+function clearStaleState() {
+  document.getElementById('search-results').innerHTML = '';
+  document.getElementById('answer').innerHTML = '答案会显示在这里...';
+  document.getElementById('answer').style.color = '#999';
+  document.getElementById('sources').innerHTML = '';
+  document.getElementById('doc-content').innerHTML = '<div style="color:#999">选择左侧文件查看内容</div>';
+  document.querySelectorAll('.tree-file').forEach(el => el.classList.remove('selected'));
+  selectedFiles.clear();
+  document.getElementById('select-all').checked = false;
 }
 
 async function loadKbList() {
