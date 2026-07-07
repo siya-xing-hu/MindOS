@@ -404,6 +404,31 @@ async function loadFile(path) {
   document.getElementById('doc-content').innerHTML = marked.parse(content);
 }
 
+function expandToPath(filePath) {
+  const parts = filePath.split('/');
+  parts.pop();
+  let currentPath = '';
+  for (const part of parts) {
+    currentPath = currentPath ? currentPath + '/' + part : part;
+    const dir = Array.from(document.querySelectorAll('.tree-dir')).find(d => d.dataset.path === currentPath);
+    if (!dir) continue;
+    const container = dir.nextElementSibling;
+    if (container && container.classList.contains('tree-node')) {
+      dir.classList.add('open');
+      container.style.display = '';
+    }
+  }
+}
+
+function selectFileNode(path) {
+  document.querySelectorAll('.tree-file').forEach(el => el.classList.remove('selected'));
+  const fileNode = Array.from(document.querySelectorAll('.tree-file')).find(el => {
+    const cb = el.querySelector('.checkbox');
+    return cb && cb.dataset.path === path;
+  });
+  if (fileNode) fileNode.classList.add('selected');
+}
+
 function toast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
