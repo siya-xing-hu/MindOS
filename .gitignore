@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.env
+*.egg-info/
+.DS_Store
+
+# 数据目录（部署方自行配置，不进 git）
+data/
+*.sqlite
+.mindos_status.sqlite
+
+# IDE
+.vscode/
+.idea/
