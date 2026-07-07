@@ -529,7 +529,11 @@ async function doAsk() {
             d.textContent = `【来源 ${i+1}】${s.title} > ${s.section}`;
             d.addEventListener('click', () => {
               showTab('docs');
-              setTimeout(() => loadFile(s.path), 100);
+              setTimeout(() => {
+                expandToPath(s.path);
+                loadFile(s.path);
+                selectFileNode(s.path);
+              }, 100);
             });
             src.appendChild(d);
           });
